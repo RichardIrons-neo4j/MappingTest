@@ -15,7 +15,7 @@ public class RecordHydratorGenerator : PropertyHydrationGenerator<GenerateHydrat
         var name = property.Name;
         var id = _propertyIndex.ToString();
         var nodeVar = $"{name}_node_{id}";
-        var type = property.Type.Name;
+        var type = property.Type.GetFullMetadataName();
 
         var result = @$"// populate {name} property
 var {nodeVar} = record[""{sourceProperty}""].As<INode>();

@@ -3,7 +3,7 @@ using System;
 using System.Linq;
 using HydrationPrototype.Interfaces;
 using Neo4j.Driver;
-namespace MappingTest;
+namespace MappingTest.DemoStages.Stage3;
 public partial class TestQueryRow : IRecordHydratable
 {
     public void HydrateFromRecord(IRecord record, IDictionary<string, object> instances)
@@ -12,11 +12,11 @@ public partial class TestQueryRow : IRecordHydratable
 var Person_node_0 = record["person"].As<INode>();
 if (instances.TryGetValue(Person_node_0.ElementId, out var foundPerson_0))
 {
-    Person = (MappingTest.Person)foundPerson_0;
+    Person = (MappingTest.DemoStages.Stage2.Person)foundPerson_0;
 }
 else
 {
-    Person = new MappingTest.Person();
+    Person = new MappingTest.DemoStages.Stage2.Person();
     ((INodeHydratable)Person).HydrateFromNode(Person_node_0);
     instances[Person_node_0.ElementId] = Person;
 }
@@ -27,32 +27,17 @@ else
 var Movie_node_1 = record["movie"].As<INode>();
 if (instances.TryGetValue(Movie_node_1.ElementId, out var foundMovie_1))
 {
-    Movie = (MappingTest.Movie)foundMovie_1;
+    Movie = (MappingTest.DemoStages.Stage2.Movie)foundMovie_1;
 }
 else
 {
-    Movie = new MappingTest.Movie();
+    Movie = new MappingTest.DemoStages.Stage2.Movie();
     ((INodeHydratable)Movie).HydrateFromNode(Movie_node_1);
     instances[Movie_node_1.ElementId] = Movie;
 }
 
 //-------------------
 
-
-var ActedInRelationship_rel_2 = record["relationship"].As<IRelationship>();
-if(ActedInRelationship_rel_2.Type == "ACTED_IN")
-{
-    ActedInRelationship = new ActedInRelationship();
-    ((IRelationshipHydratable)ActedInRelationship).HydrateFromRelationship(ActedInRelationship_rel_2, instances);
-}
-
-
-var DirectedRelationship_rel_2 = record["relationship"].As<IRelationship>();
-if(DirectedRelationship_rel_2.Type == "DIRECTED")
-{
-    DirectedRelationship = new DirectedRelationship();
-    ((IRelationshipHydratable)DirectedRelationship).HydrateFromRelationship(DirectedRelationship_rel_2, instances);
-}
 
     }
 }

@@ -10,7 +10,8 @@ public class NodeHydratorGenerator : PropertyHydrationGenerator<GenerateHydratio
 {
     protected override string GetPropertySetter(IPropertySymbol property, string sourceProperty, Attribute attribute)
     {
-        return $"{property.Name} = node.Properties[\"{sourceProperty}\"].As<{property.Type.GetFullName()}>();"; }
+        return $"{property.Name} = node.Properties[\"{sourceProperty}\"].As<{property.Type.GetFullName()}>();";
+    }
 
     public override string GetGeneratedSourceCode(ClassCompileInfo classCompileInfo)
     {

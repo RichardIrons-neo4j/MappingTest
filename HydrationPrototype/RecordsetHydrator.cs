@@ -16,7 +16,7 @@ public static class RecordsetHydrator
         return result;
     }
 
-    public static IEnumerable<T> AsObjects<T>(this IEnumerable<IRecord> records) where T : new()
+    public static IEnumerable<T> AsObjects<T>(this IEnumerable<IRecord> records) where T : IRecordHydratable, new()
     {
         var instances = new Dictionary<string, object>();
         return records.Select(r => GetHydratedObject<T>(r, instances));

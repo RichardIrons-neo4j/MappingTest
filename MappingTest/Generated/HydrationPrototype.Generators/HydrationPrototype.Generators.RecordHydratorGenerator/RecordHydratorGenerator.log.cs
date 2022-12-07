@@ -1,3 +1,4 @@
 ﻿// Receiver type is SyntaxContextReceiver
-// Receiver has 1 entries to generate for
+// Receiver has 2 entries to generate for
+//  - TestQueryRow
 //  - TestQueryRow
