@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using HydrationPrototype;
 using MappingTest.DemoStages;
 using MappingTest.DemoStages.Stage1;
+using MappingTest.DemoStages.Stage2;
 using Neo4j.Driver;
 using Serilog;
 
@@ -49,14 +50,15 @@ public class Program
             .AddTransient<Program>()
             .AddTransient<ExampleQuery>()
             .AddLogging(l => l.AddSerilog())
-            .AddTransient<IDemoStage, DemoStage1>();
+            .AddTransient<IDemoStage, DemoStage1>()
+            .AddTransient<IDemoStage, DemoStage2>();
 
         return services.BuildServiceProvider();
     }
 
     private async Task Run()
     {
-        var demoStage = _demoStages.First(d => d.Stage == 1);
+        var demoStage = _demoStages.First(d => d.Stage == 2);
         await demoStage.RunAsync();
         Console.ReadLine();
         //return;
