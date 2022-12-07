@@ -5,6 +5,7 @@ using MappingTest.DemoStages;
 using MappingTest.DemoStages.Stage1;
 using MappingTest.DemoStages.Stage2;
 using MappingTest.DemoStages.Stage3;
+using MappingTest.DemoStages.Stage4;
 using Neo4j.Driver;
 using Serilog;
 
@@ -53,14 +54,15 @@ public class Program
             .AddLogging(l => l.AddSerilog())
             .AddTransient<IDemoStage, DemoStage1>()
             .AddTransient<IDemoStage, DemoStage2>()
-            .AddTransient<IDemoStage, DemoStage3>();
+            .AddTransient<IDemoStage, DemoStage3>()
+            .AddTransient<IDemoStage, DemoStage4>();
 
         return services.BuildServiceProvider();
     }
 
     private async Task Run()
     {
-        var demoStage = _demoStages.First(d => d.Stage == 3);
+        var demoStage = _demoStages.First(d => d.Stage == 4);
         await demoStage.RunAsync();
         Console.ReadLine();
         //return;
