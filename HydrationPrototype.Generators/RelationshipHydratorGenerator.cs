@@ -43,7 +43,7 @@ if({property.Name} is INodeHydratable {hydratable})
 using System;
 using HydrationPrototype.Interfaces;
 using Neo4j.Driver;
-namespace {classCompileInfo.Symbol.ContainingNamespace.Name};
+namespace {classCompileInfo.Symbol.ContainingNamespace.GetFullName()};
 public partial class {classCompileInfo.Syntax.Identifier} : {nameof(IRelationshipHydratable)}
 {{
     public void HydrateFromRelationship(IRelationship relationship, IDictionary<string, object> instances)

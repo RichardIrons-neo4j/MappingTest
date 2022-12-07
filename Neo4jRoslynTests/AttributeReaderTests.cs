@@ -4,7 +4,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using NUnit.Framework;
 using HydrationPrototype;
-using HydrationPrototype.RoslynHelpers;
 
 namespace Neo4jRoslynTests;
 

@@ -1,6 +1,8 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using HydrationPrototype;
+using MappingTest.DemoStages;
+using MappingTest.DemoStages.Stage1;
 using Neo4j.Driver;
 using Serilog;
 
@@ -9,13 +11,16 @@ namespace MappingTest;
 public class Program
 {
     private readonly ILogger<Program> _logger;
+    private readonly IEnumerable<IDemoStage> _demoStages;
     private readonly ExampleQuery _exampleQuery;
 
     public Program(
         ILogger<Program> logger,
+        IEnumerable<IDemoStage> demoStages,
         ExampleQuery exampleQuery)
     {
         _logger = logger;
+        _demoStages = demoStages;
         _exampleQuery = exampleQuery;
     }
 
@@ -28,6 +33,7 @@ public class Program
 
         var loggerFactory = LoggerFactory.Create(lb => lb.AddSerilog(serilog));
 
+        _demoStages = Enumerable.Empty<IDemoStage>();
         _logger = loggerFactory.CreateLogger<Program>();
         _exampleQuery = new ExampleQuery();
     }
@@ -42,13 +48,19 @@ public class Program
         var services = new ServiceCollection()
             .AddTransient<Program>()
             .AddTransient<ExampleQuery>()
-            .AddLogging(l => l.AddSerilog());
+            .AddLogging(l => l.AddSerilog())
+            .AddTransient<IDemoStage, DemoStage1>();
 
         return services.BuildServiceProvider();
     }
 
     private async Task Run()
     {
+        var demoStage = _demoStages.First(d => d.Stage == 1);
+        await demoStage.RunAsync();
+        Console.ReadLine();
+        //return;
+
         var records = await _exampleQuery.GetRecordsAsync();
 
         _logger.LogDebug("Hydrated records:");

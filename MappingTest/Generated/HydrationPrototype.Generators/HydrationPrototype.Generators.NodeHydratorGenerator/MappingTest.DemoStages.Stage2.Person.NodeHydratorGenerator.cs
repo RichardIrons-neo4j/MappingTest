@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using HydrationPrototype;
 using HydrationPrototype.Interfaces;
 using Neo4j.Driver;
-namespace MappingTest;
+namespace MappingTest.DemoStages.Stage2;
 public partial class Person : NodeHydratableBase, INodeHydratable
 {
     public void HydrateFromNode(INode node)

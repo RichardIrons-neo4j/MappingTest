@@ -15,9 +15,7 @@ public static class SymbolExtensions
             containing = containing.ContainingNamespace;
         }
 
-        var fullNamespace = string.Join(".", spaces);
-
-        return $"{symbol.ContainingNamespace.Name}.{symbol.Name}";
+        return new string(string.Join(".", spaces).Skip(1).ToArray());
     }
 
     public static bool MatchesTypeByName<T>(this ISymbol symbol)

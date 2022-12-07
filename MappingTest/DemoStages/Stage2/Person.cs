@@ -1,6 +1,6 @@
 ﻿using HydrationPrototype.Attributes;
 
-namespace MappingTest;
+namespace MappingTest.DemoStages.Stage2;
 
 [GenerateHydrationFromNode]
 public partial class Person

@@ -76,7 +76,7 @@ using System;
 using System.Linq;
 using HydrationPrototype.Interfaces;
 using Neo4j.Driver;
-namespace {classCompileInfo.Symbol.ContainingNamespace.Name};
+namespace {classCompileInfo.Symbol.ContainingNamespace.GetFullName()};
 public partial class {classCompileInfo.Syntax.Identifier} : {nameof(IRecordHydratable)}
 {{
     public void HydrateFromRecord(IRecord record, IDictionary<string, object> instances)
