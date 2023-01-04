@@ -9,7 +9,7 @@ public partial class Person : NodeHydratableBase, INodeHydratable
 {
     public void HydrateFromNode(INode node)
     {
-Name = node.Properties["name"].As<System.String>();
+        Name = node.Properties["name"].As<System.String>();
 Born = node.Properties["born"].As<System.Int32>();
     }
 }

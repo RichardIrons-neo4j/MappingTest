@@ -5,14 +5,11 @@ namespace HydrationPrototype;
 
 public static class RecordsetHydrator
 {
-    private static T GetHydratedObject<T>(IRecord record, Dictionary<string, object> instances) where T : new()
+    private static T GetHydratedObject<T>(IRecord record, Dictionary<string, object> instances)
+        where T : IRecordHydratable, new()
     {
         var result = new T();
-        if (result is IRecordHydratable recordHydratable)
-        {
-            recordHydratable.HydrateFromRecord(record, instances);
-        }
-
+        result.HydrateFromRecord(record, instances);
         return result;
     }
 
@@ -25,11 +22,18 @@ public static class RecordsetHydrator
     public static IEnumerable<T> AsObjects<T>(this IEnumerable<IRecord> records, string nodeName)
         where T : INodeHydratable, new()
     {
+        var instances = new Dictionary<string, T>();
         foreach (var record in records)
         {
             var node = record[nodeName].As<INode>();
-            var item = new T();
-            item.HydrateFromNode(node);
+
+            if (!instances.TryGetValue(node.ElementId, out var item))
+            {
+                item = new T();
+                item.HydrateFromNode(node);
+                instances[node.ElementId] = item;
+            }
+
             yield return item;
         }
     }

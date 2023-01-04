@@ -25,9 +25,11 @@ public class DemoStage3 : IDemoStage
         foreach (var row in rows)
         {
             _logger.LogDebug(
-                "Movie: {Title}, Person: {Person}",
+                "Movie: {Title} ({MovieHashCode}), Person: {Person} ({PersonHashCode})",
                 row.Movie.Title,
-                row.Person.Name);
+                row.Movie.GetHashCode(),
+                row.Person.Name,
+                row.Person.GetHashCode());
         }
     }
 }

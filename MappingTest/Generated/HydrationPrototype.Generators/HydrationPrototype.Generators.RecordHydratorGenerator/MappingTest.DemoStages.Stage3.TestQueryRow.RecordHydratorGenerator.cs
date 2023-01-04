@@ -8,7 +8,7 @@ public partial class TestQueryRow : IRecordHydratable
 {
     public void HydrateFromRecord(IRecord record, IDictionary<string, object> instances)
     {
-// populate Person property
+        // populate Person property
 var Person_node_0 = record["person"].As<INode>();
 if (instances.TryGetValue(Person_node_0.ElementId, out var foundPerson_0))
 {
@@ -38,6 +38,6 @@ else
 
 //-------------------
 
-
+        
     }
 }

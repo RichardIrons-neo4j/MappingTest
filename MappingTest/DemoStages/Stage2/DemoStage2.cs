@@ -22,13 +22,14 @@ public class DemoStage2 : IDemoStage
     {
         var records = await _exampleQuery.GetRecordsAsync();
         var movies = records.AsObjects<Movie>("movie");
-        foreach (var movie in movies.DistinctBy(m => m.Title?.Trim().ToLower()))
+        foreach (var movie in movies/*.DistinctBy(m => m.Title?.Trim().ToLower())*/)
         {
             _logger.LogDebug(
-                "Title: <{Title}>, Released {Released}, Tagline: {Tagline}",
+                "Title: <{Title}>, Released {Released}, Tagline: {Tagline}, ID: {Id}",
                 movie.Title,
                 movie.Released,
-                movie.Tagline);
+                movie.Tagline,
+                movie.GetHashCode());
         }
     }
 }

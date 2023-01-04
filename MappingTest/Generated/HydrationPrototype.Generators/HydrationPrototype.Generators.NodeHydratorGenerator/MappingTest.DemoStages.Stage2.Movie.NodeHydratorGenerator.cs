@@ -9,7 +9,7 @@ public partial class Movie : NodeHydratableBase, INodeHydratable
 {
     public void HydrateFromNode(INode node)
     {
-Tagline = node.Properties["tagline"].As<System.String>();
+        Tagline = node.Properties["tagline"].As<System.String>();
 Title = node.Properties["title"].As<System.String>();
 Released = node.Properties["released"].As<System.Int32>();
     }

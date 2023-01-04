@@ -8,7 +8,7 @@ public partial class TestQueryRow : IRecordHydratable
 {
     public void HydrateFromRecord(IRecord record, IDictionary<string, object> instances)
     {
-// populate Person property
+        // populate Person property
 var Person_node_0 = record["person"].As<INode>();
 if (instances.TryGetValue(Person_node_0.ElementId, out var foundPerson_0))
 {
@@ -38,12 +38,12 @@ else
 
 //-------------------
 
-
+        
 var ActedInRelationship_rel_2 = record["relationship"].As<IRelationship>();
 if(ActedInRelationship_rel_2.Type == "ACTED_IN")
 {
     ActedInRelationship = new ActedInRelationship();
-    ((IRelationshipHydratable)ActedInRelationship).HydrateFromRelationship(ActedInRelationship_rel_2, instances);
+    ActedInRelationship.HydrateFromRelationship(ActedInRelationship_rel_2, instances);
 }
 
 
@@ -51,7 +51,7 @@ var DirectedRelationship_rel_2 = record["relationship"].As<IRelationship>();
 if(DirectedRelationship_rel_2.Type == "DIRECTED")
 {
     DirectedRelationship = new DirectedRelationship();
-    ((IRelationshipHydratable)DirectedRelationship).HydrateFromRelationship(DirectedRelationship_rel_2, instances);
+    DirectedRelationship.HydrateFromRelationship(DirectedRelationship_rel_2, instances);
 }
 
     }

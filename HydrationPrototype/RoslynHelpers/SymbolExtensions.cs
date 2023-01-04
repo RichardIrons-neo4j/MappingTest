@@ -5,8 +5,14 @@ namespace HydrationPrototype;
 
 public static class SymbolExtensions
 {
+    private static Dictionary<ISymbol, string> _fullNames = new(SymbolEqualityComparer.IncludeNullability);
     public static string GetFullName(this ISymbol symbol)
     {
+        if (_fullNames.TryGetValue(symbol, out var result))
+        {
+            return result;
+        }
+
         var spaces = new List<string>();
         var containing = symbol;
         while (containing != null)
@@ -15,7 +21,9 @@ public static class SymbolExtensions
             containing = containing.ContainingNamespace;
         }
 
-        return new string(string.Join(".", spaces).Skip(1).ToArray());
+        result = new string(string.Join(".", spaces).Skip(1).ToArray());
+        _fullNames[symbol] = result;
+        return result;
     }
 
     public static bool MatchesTypeByName<T>(this ISymbol symbol)
@@ -34,6 +42,7 @@ public static class SymbolExtensions
         while (current != null)
         {
             yield return current;
+
             current = current.BaseType;
         }
     }
@@ -111,14 +120,28 @@ public static class SymbolExtensions
         }
     }
 
-    public static string GetFullMetadataName(this ISymbol s)
+    private static Dictionary<ISymbol, string> _fullMetadataNames = new(SymbolEqualityComparer.IncludeNullability);
+
+    public static string GetFullMetadataName(this ISymbol typeSymbol)
+    {
+        if (_fullMetadataNames.TryGetValue(typeSymbol, out var result))
+        {
+            return result;
+        }
+
+        result = typeSymbol.GetFullMetadataNameInternal();
+        _fullMetadataNames[typeSymbol] = result;
+        return result;
+    }
+
+    private static string GetFullMetadataNameInternal(this ISymbol s)
     {
         if (s.IsRootNamespace())
         {
             return string.Empty;
         }
 
-        var sb = new StringBuilder(s.GetDisplayName());
+        var sb = new StringBuilder(s.GetDisplayName(), 500);
         var last = s;
 
         s = s.ContainingSymbol;
